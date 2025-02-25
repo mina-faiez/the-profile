@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شارع 9 - أصم</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+        }
+
+        header img {
+            width: 100%;
+            height: 500px;;
+        }
+
+        .profile img {
+            width: 150px;
+            border-radius: 50%;
+            margin-top: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .info-box {
+            background-color: white;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #343a40;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="اللوجو.jpeg" alt="صورة الموقع">
+    </header>
+
+    <section class="profile">
+        <img src="البروقايل.jpeg" alt="صورة الشخص">
+        <p>ياسمين كمال محمد محمود تعاني من اعاقة سمعية </p>
+    </section>
+
+    <button onclick="toggleInfo()">المعلومات العامة</button>
+    <div id="general-info" class="hidden info-box">
+        <p>📌 النوع: أنثى</p>
+        <p>📆 تاريخ الميلاد: 12/4/1997</p>
+        <p>🕌 الديانة: مسلمة</p>
+        <p>💍 الحالة الاجتماعية: متزوجة</p>
+        <p>📞 رقم الزوج: <a href="tel:01551927925">01551927925</a></p>
+        <p>📞 رقم الصديقة: <a href="tel:01112199451">01112199451</a></p>
+        <p>📚 المؤهلات: دبلوم فني للصم وضعاف السمع</p>
+        <p>💼 الوظيفة: عملت في محل ملابس سابقًا</p>
+        <p>🏥 الحالة الصحية: تعاني من الصداع وارتفاع الأملاح في القدم</p>
+
+        <h3>🩺 التحاليل الطبية</h3>
+        <img src="التحليل 6.jpeg" width="100">
+        <img src="تحليل 2.jpeg" width="100">
+        <img src="تحليل 3 .jpeg" width="100">
+        <img src="تحليل 4.jpeg" width="100">
+        <img src="تحليل.jpeg" width="100">
+    </div>
+
+    <button onclick="checkPassword()">المعلومات الخاصة</button>
+    <div id="private-info" class="hidden info-box">
+        <p>🔒 الرقم القومي: <span id="id-number">29704121301306</span></p>
+        <img src="البطاقة 2.jpeg" width="150">
+        <img src="البطاقة.jpeg" width="150">
+        <img src="الشهادة.jpeg" width="150">
+    </div>
+
+    <h3>📷 مسح QR Code</h3>
+    <div id="reader"></div>
+    <p id="qr-result"></p>
+
+    <button onclick="sendLiveLocation()">📍 إرسال الموقع إلى واتساب</button>
+
+    <h3>🚨 الطوارئ</h3>
+    <a href="tel:01551927925"><button>اتصل بالزوج</button></a>
+    <a href="tel:01112199451"><button>اتصل بالصديقة</button></a>
+    <a href="tel:122"><button>🚔 الشرطة</button></a>
+    <a href="tel:123"><button>🚑 الإسعاف</button></a>
+    <a href="tel:180"><button>🔥 المطافي</button></a>
+
+    <h3>للتواصل مع 
+        👐 مترجمو الإشارة 
+    </h3>
+    <a href="https://www.facebook.com/share/18PrPBjAsj/?mibextid=wwXIfr"><button>  Menna A Helal</button></a>
+    <a href="https://www.facebook.com/share/19PRJJt2UC/?mibextid=wwXIfr"><button>  Esraa Adel</button></a>
+    <a href="https://www.facebook.com/share/18SzqcKNah/?mibextid=wwXIfr"><button>  Al-Shimaa Kotob</button></a>
+
+    <footer>© 2025 شارع 9 - جميع الحقوق محفوظة</footer>
+
+    <script>
+        function toggleInfo() {
+            document.getElementById("general-info").classList.toggle("hidden");
+        }
+
+        function checkPassword() {
+            let password = prompt("أدخل كلمة المرور:");
+            if (password === "1234") { 
+                document.getElementById("private-info").classList.remove("hidden");
+                document.getElementById("id-number").textContent = "29704121301306";
+            } else {
+                alert("كلمة المرور غير صحيحة!");
+            }
+        }
+
+        function sendLiveLocation() {
+            let phoneNumber = "01112199451";
+            navigator.geolocation.getCurrentPosition(position => {
+                let lat = position.coords.latitude;
+                let lon = position.coords.longitude;
+                let locationURL = `https://www.google.com/maps?q=${lat},${lon}`;
+                let whatsappURL = `https://wa.me/${phoneNumber}?text=موقعي%20الحالي:%20${locationURL}`;
+                window.location.href = whatsappURL;
+            }, error => {
+                alert("تعذر تحديد الموقع");
+            });
+        }
+
+        function scanQRCode() {
+            let scanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+            scanner.render((decodedText) => {
+                document.getElementById("qr-result").innerText = "📌 نتيجة المسح: " + decodedText;
+                window.open(decodedText, "_blank");
+            });
+        }
+
+        scanQRCode(); 
+    </script>
+
+</body>
+</html>
+
+
